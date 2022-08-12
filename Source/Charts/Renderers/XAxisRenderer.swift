@@ -255,6 +255,10 @@ open class XAxisRenderer: NSObject, AxisRenderer
         let labelAttrs: [NSAttributedString.Key : Any] = [.font: axis.labelFont,
                                                          .foregroundColor: axis.labelTextColor,
                                                          .paragraphStyle: paraStyle]
+        
+        let labelSelectingAttrs: [NSAttributedString.Key : Any] = [.font: axis.labelFont,
+                                                                   .foregroundColor: axis.labelSelectedTextColor,
+                                                         .paragraphStyle: paraStyle]
 
         let labelRotationAngleRadians = axis.labelRotationAngle.DEG2RAD
         let isCenteringEnabled = axis.isCenterAxisLabelsEnabled
@@ -305,7 +309,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
                       formattedLabel: label,
                       x: position.x,
                       y: pos,
-                      attributes: labelAttrs,
+                      attributes: i == axis.isSelecting.0 - 1 && axis.isSelecting.1 ? labelSelectingAttrs : labelAttrs,
                       constrainedTo: labelMaxSize,
                       anchor: anchor,
                       angleRadians: labelRotationAngleRadians)

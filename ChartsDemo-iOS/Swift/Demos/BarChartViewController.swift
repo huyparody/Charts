@@ -50,6 +50,7 @@ class BarChartViewController: DemoBaseViewController {
         let xAxis = chartView.xAxis
         xAxis.labelPosition = .bottom
         xAxis.labelFont = .systemFont(ofSize: 10)
+        xAxis.labelSelectedTextColor = .blue
         xAxis.granularity = 1
         xAxis.labelCount = 7
         xAxis.valueFormatter = DayAxisValueFormatter(chart: chartView)
@@ -153,5 +154,17 @@ class BarChartViewController: DemoBaseViewController {
         sliderTextY.text = "\(Int(sliderY.value))"
         
         self.updateChartData()
+    }
+    
+    override func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        chartValueNothingSelected(chartView)
+        chartView.indexSelected = Int(entry.x)
+//        chartView.isSelecting = (chartView.indexSelected, true)
+        chartView.xAxis.isSelecting = (chartView.indexSelected, true)
+    }
+    
+    override func chartValueNothingSelected(_ chartView: ChartViewBase) {
+//        chartView.isSelecting = (chartView.indexSelected, false)
+        chartView.xAxis.isSelecting = (chartView.indexSelected, false)
     }
 }
