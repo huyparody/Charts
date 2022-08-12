@@ -379,7 +379,13 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
             
-            context.fill(barRect)
+            // fill -> ve hinh chu nhat
+//            context.fill(barRect)
+            // draw corner radius topleft va topright cua 1 bar
+            let path = UIBezierPath.init(roundedRect: barRect, byRoundingCorners: [.topLeft, .topRight], cornerRadii: .init(width: 8, height: 8))
+            context.addPath(path.cgPath)
+            context.setStrokeColor(UIColor.clear.cgColor)
+            context.drawPath(using: .fillStroke)
             
             if drawBorder
             {
@@ -505,9 +511,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                                     dataSetIndex: dataSetIndex,
                                     viewPortHandler: viewPortHandler),
                                 xPos: x,
-                                yPos: val >= 0.0
-                                    ? (rect.origin.y + posOffset)
-                                    : (rect.origin.y + rect.size.height + negOffset),
+                                yPos: val > 0.0
+                                    ? rect.midY - (valueFont.pointSize / 2) //midY = o giua + them doan font / 2 -> chinh giua
+                                : (rect.midY - valueFont.pointSize - 4), //midY - heightFont -> 0 o tren dung design, 4= constraint theo design
                                 font: valueFont,
                                 align: .center,
                                 color: dataSet.valueTextColorAt(j),
@@ -744,7 +750,12 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 setHighlightDrawPos(highlight: high, barRect: barRect)
                 
-                context.fill(barRect)
+//                context.fill(barRect)
+                // -> set highlight corner theo default bar
+                let path = UIBezierPath.init(roundedRect: barRect, byRoundingCorners: [.topLeft, .topRight], cornerRadii: .init(width: 8, height: 8))
+                context.addPath(path.cgPath)
+                context.setStrokeColor(UIColor.clear.cgColor)
+                context.drawPath(using: .fillStroke)
             }
         }
     }
