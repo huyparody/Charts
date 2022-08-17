@@ -209,6 +209,12 @@ public protocol ChartDataSetProtocol
     /// the font for the value-text labels
     var valueFont: NSUIFont { get set }
     
+    /// font cho thang danh gia
+    var ratingFont: NSUIFont { get set }
+    
+    /// string cho thang danh gia
+    var ratingText: String { get set }
+    
     /// The rotation angle (in degrees) for value-text labels
     var valueLabelAngle: CGFloat { get set }
     

@@ -305,6 +305,10 @@ open class ChartBaseDataSet: NSObject, ChartDataSetProtocol, NSCopying
     /// the font for the value-text labels
     open var valueFont: NSUIFont = NSUIFont.systemFont(ofSize: 7.0)
     
+    open var ratingFont: NSUIFont = NSUIFont.systemFont(ofSize: 9.0)
+    
+    public var ratingText: String = ""
+    
     /// The rotation angle (in degrees) for value-text labels
     open var valueLabelAngle: CGFloat = CGFloat(0.0)
     
@@ -398,6 +402,8 @@ open class ChartBaseDataSet: NSObject, ChartDataSetProtocol, NSCopying
         copy.highlightEnabled = highlightEnabled
         copy.valueFormatter = valueFormatter
         copy.valueFont = valueFont
+        copy.ratingFont = ratingFont
+        copy.ratingText = ratingText
         copy.form = form
         copy.formSize = formSize
         copy.formLineWidth = formLineWidth

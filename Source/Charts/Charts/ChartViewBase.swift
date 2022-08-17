@@ -507,7 +507,10 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
             guard entryIndex <= Int(Double(set.entryCount) * chartAnimator.phaseX) else { continue }
 
             let pos = getMarkerPosition(highlight: highlight)
-
+            //neu la cot danh gia ngay > k show marker
+            if e.data as? BarChartDisplayType == .rating {
+                return
+            }
             // check bounds
             guard viewPortHandler.isInBounds(x: pos.x, y: pos.y) else { continue }
 

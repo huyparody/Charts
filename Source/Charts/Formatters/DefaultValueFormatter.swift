@@ -105,7 +105,18 @@ open class DefaultValueFormatter: NSObject, ValueFormatter
         if let block = block {
             return block(value, entry, dataSetIndex, viewPortHandler)
         } else {
-            return formatter?.string(from: NSNumber(floatLiteral: value)) ?? ""
+            formatter?.numberStyle = .decimal
+            formatter?.maximumFractionDigits = 1
+            formatter?.decimalSeparator = "."
+//            print(modf(value).0, modf(value).1)
+            //check phan thua cua 1 so thap phan, neu phan thua lon hon 0 > hien thi double
+            if modf(value).1 > 0 {
+                return formatter?.string(from: NSNumber(floatLiteral: value)) ?? ""
+            }
+            //else hien thi int
+            else {
+                return "\(Int(value))"
+            }
         }
     }
 }

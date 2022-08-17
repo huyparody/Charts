@@ -16,6 +16,11 @@ import CoreGraphics
     import UIKit
 #endif
 
+//
+public enum BarChartDisplayType {
+    case rating
+}
+
 open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
 {
     /// A nested array of elements ordered logically (i.e not in visual/drawing order) for use with VoiceOver
@@ -368,6 +373,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
 
         for j in buffer.indices
         {
+            guard let entry = dataSet.entryForIndex(j) as? BarChartDataEntry else { continue }
             let barRect = buffer[j]
             
             guard viewPortHandler.isInBoundsLeft(barRect.origin.x + barRect.size.width) else { continue }
@@ -378,6 +384,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 // Set the color for the currently drawn value. If the index is out of bounds, reuse colors.
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
+            
+            //mau cua vao danh gia
+            context.setFillColor(entry.data as? BarChartDisplayType == .rating ? UIColor.orange.cgColor : dataSet.color(atIndex: 0).cgColor)
             
             // fill -> ve hinh chu nhat
 //            context.fill(barRect)
@@ -461,6 +470,8 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 // calculate the correct offset depending on the draw position of the value
                 let valueFont = dataSet.valueFont
+                let ratingFont = dataSet.ratingFont
+                let ratingText = dataSet.ratingText
                 let valueTextHeight = valueFont.lineHeight
                 posOffset = (drawValueAboveBar ? -(valueTextHeight + valueOffsetPlus) : valueOffsetPlus)
                 negOffset = (drawValueAboveBar ? valueOffsetPlus : -(valueTextHeight + valueOffsetPlus))
@@ -505,7 +516,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                         {
                             drawValue(
                                 context: context,
-                                value: formatter.stringForValue(
+                                value: e.data as? BarChartDisplayType == .rating ? ratingText : formatter.stringForValue(
                                     val,
                                     entry: e,
                                     dataSetIndex: dataSetIndex,
@@ -514,7 +525,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                                 yPos: val > 0.0
                                     ? rect.midY - (valueFont.pointSize / 2) //midY = o giua + them doan font / 2 -> chinh giua
                                 : (rect.midY - valueFont.pointSize - 4), //midY - heightFont -> 0 o tren dung design, 4= constraint theo design
-                                font: valueFont,
+                                font: e.data as? BarChartDisplayType == .rating ? ratingFont : valueFont,
                                 align: .center,
                                 color: dataSet.valueTextColorAt(j),
                                 anchor: CGPoint(x: 0.5, y: 0.5),
@@ -716,8 +727,8 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 guard isInBoundsX(entry: e, dataSet: set) else { continue }
                 
                 let trans = dataProvider.getTransformer(forAxis: set.axisDependency)
-                
-                context.setFillColor(set.highlightColor.cgColor)
+                //mau cua danh gia khi chon
+                context.setFillColor(e.data as? BarChartDisplayType == .rating ? set.highlightRatingColor.cgColor : set.highlightColor.cgColor)
                 context.setAlpha(set.highlightAlpha)
                 
                 let isStack = high.stackIndex >= 0 && e.isStacked

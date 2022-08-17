@@ -108,7 +108,38 @@ class BarChartViewController: DemoBaseViewController {
             return
         }
         
-        self.setDataCount(Int(sliderX.value) + 1, range: UInt32(sliderY.value))
+//        self.setDataCount(Int(sliderX.value) + 1, range: UInt32(sliderY.value))
+        setData()
+    }
+    
+    let yValue: [BarChartDataEntry] = [
+        BarChartDataEntry(x: 1, y: 0),
+        BarChartDataEntry(x: 2, y: 6.5),
+        BarChartDataEntry(x: 3, y: 4),
+        BarChartDataEntry(x: 4, y: 1),
+        BarChartDataEntry(x: 5, y: 8),
+        BarChartDataEntry(x: 6, y: 1, data: BarChartDisplayType.rating),
+        BarChartDataEntry(x: 7, y: 4),
+        BarChartDataEntry(x: 8, y: 3),
+        BarChartDataEntry(x: 9, y: 8),
+        BarChartDataEntry(x: 10, y: 4),
+    ]
+    
+    func setData() {
+        let set = BarChartDataSet.init(entries: yValue, label: "Diem")
+        //set mau khi chon bar
+        set.highlightColor = .red
+        set.colors = [.systemPurple]
+        set.valueFont = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        set.ratingFont = UIFont.systemFont(ofSize: 9, weight: .semibold)
+        set.valueTextColor = .green
+        set.ratingText = "alo"
+        set.highlightRatingColor = .brown
+        let data = BarChartData(dataSet: set)
+        //width cua 1 bar
+        data.barWidth = 0.72
+        
+        chartView.data = data
     }
     
     func setDataCount(_ count: Int, range: UInt32) {
