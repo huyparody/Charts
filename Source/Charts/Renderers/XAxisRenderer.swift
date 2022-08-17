@@ -309,7 +309,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
                       formattedLabel: label,
                       x: position.x,
                       y: pos,
-                      attributes: i == axis.isSelecting.0 - 1 && axis.isSelecting.1 ? labelSelectingAttrs : labelAttrs,
+                      attributes: labelAttrs,
                       constrainedTo: labelMaxSize,
                       anchor: anchor,
                       angleRadians: labelRotationAngleRadians)
