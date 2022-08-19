@@ -302,9 +302,9 @@ open class XAxisRenderer: NSObject, AxisRenderer
 //            let label = axis.valueFormatter?.stringForValue(axis.entries[i], axis: axis) ?? ""
             let labelX = "\(axis.entries[i])"
             let indexLabelX = Int(Double(labelX) ?? 0)
-            let label = axis.dates[indexLabelX] //-1 vi i lech voi dateArray
+            let label = dates[indexLabelX - 1] //-1 vi i lech voi dateArray
             let labelns = label as NSString
-            print(indexLabelX, i)
+//            print(indexLabelX, dates[indexLabelX - 1], i)
             
             if axis.isAvoidFirstLastClippingEnabled
             {

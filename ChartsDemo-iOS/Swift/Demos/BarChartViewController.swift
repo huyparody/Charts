@@ -113,7 +113,7 @@ class BarChartViewController: DemoBaseViewController {
     }
     
     let yValue: [BarChartDataEntry] = [
-        BarChartDataEntry(x: 0, y: 4, date: "31/05"),
+//        BarChartDataEntry(x: 0, y: 4, date: "31/05"),
         BarChartDataEntry(x: 1, y: 0, date: "01/06"),
         BarChartDataEntry(x: 2, y: 6.5, date: "02/06"),
         BarChartDataEntry(x: 3, y: 4, date: "03/06"),
