@@ -280,12 +280,12 @@ open class XAxisRenderer: NSObject, AxisRenderer
         
         // lay ra date lam thanh mang cac ngay`
         if let chartData = chartData {
+            axis.dates = []
             for i in chartData.dataSets
             {
                 for j in 0 ..< i.entryCount
                 {
                     guard let e = i.entryForIndex(j) else { continue }
-                    axis.dates = []
                     axis.dates.append(e.date)
                 }
             }
@@ -304,7 +304,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
             let indexLabelX = Int(Double(labelX) ?? 0)
             let label = axis.dates[indexLabelX - 1] //-1 vi i lech voi dateArray
             let labelns = label as NSString
-            print(indexLabelX, axis.dates[indexLabelX - 1], i)
+//            print(indexLabelX, axis.dates[indexLabelX - 1], i)
             
             if axis.isAvoidFirstLastClippingEnabled
             {
