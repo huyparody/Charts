@@ -38,7 +38,8 @@ public protocol AxisRenderer: Renderer {
     /// Computes the axis values.
     /// - parameter min: the minimum value in the data object for this axis
     /// - parameter max: the maximum value in the data object for this axis
-    func computeAxis(min: Double, max: Double, inverted: Bool)
+    /// truyen ca chart data vao de hien thi date
+    func computeAxis(min: Double, max: Double, inverted: Bool, data: ChartData?)
 
     /// Sets up the axis values. Computes the desired number of labels between the two given extremes.
     func computeAxisValues(min: Double, max: Double)

@@ -50,10 +50,10 @@ class BarChartViewController: DemoBaseViewController {
         let xAxis = chartView.xAxis
         xAxis.labelPosition = .bottom
         xAxis.labelFont = .systemFont(ofSize: 10)
-        xAxis.labelSelectedTextColor = .blue
+        xAxis.labelSelectedTextColor = .red
         xAxis.granularity = 1
         xAxis.labelCount = 7
-        xAxis.valueFormatter = DayAxisValueFormatter(chart: chartView)
+//        xAxis.valueFormatter = DayAxisValueFormatter(chart: chartView)
         
         let leftAxisFormatter = NumberFormatter()
         leftAxisFormatter.minimumFractionDigits = 0
@@ -113,16 +113,17 @@ class BarChartViewController: DemoBaseViewController {
     }
     
     let yValue: [BarChartDataEntry] = [
-        BarChartDataEntry(x: 1, y: 0),
-        BarChartDataEntry(x: 2, y: 6.5),
-        BarChartDataEntry(x: 3, y: 4),
-        BarChartDataEntry(x: 4, y: 1),
-        BarChartDataEntry(x: 5, y: 8),
-        BarChartDataEntry(x: 6, y: 1, data: BarChartDisplayType.rating),
-        BarChartDataEntry(x: 7, y: 4),
-        BarChartDataEntry(x: 8, y: 3),
-        BarChartDataEntry(x: 9, y: 8),
-        BarChartDataEntry(x: 10, y: 4),
+        BarChartDataEntry(x: 0, y: 4, date: "31/05"),
+        BarChartDataEntry(x: 1, y: 0, date: "01/06"),
+        BarChartDataEntry(x: 2, y: 6.5, date: "02/06"),
+        BarChartDataEntry(x: 3, y: 4, date: "03/06"),
+        BarChartDataEntry(x: 4, y: 1, date: "04/06"),
+        BarChartDataEntry(x: 5, y: 8, date: "05/06"),
+        BarChartDataEntry(x: 6, y: 1, data: BarChartDisplayType.rating, date: "06/06"),
+        BarChartDataEntry(x: 7, y: 4, date: "07/06"),
+        BarChartDataEntry(x: 8, y: 3, date: "08/06"),
+        BarChartDataEntry(x: 9, y: 8, date: "09/06"),
+        BarChartDataEntry(x: 10, y: 4, date: "10/06"),
     ]
     
     func setData() {
@@ -135,6 +136,7 @@ class BarChartViewController: DemoBaseViewController {
         set.valueTextColor = .green
         set.ratingText = "alo"
         set.highlightRatingColor = .brown
+        set.ratingBarColor = .systemGreen
         let data = BarChartData(dataSet: set)
         //width cua 1 bar
         data.barWidth = 0.72

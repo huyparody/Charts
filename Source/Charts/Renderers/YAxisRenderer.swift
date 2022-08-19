@@ -333,7 +333,7 @@ open class YAxisRenderer: NSObject, AxisRenderer
         }
     }
 
-    @objc open func computeAxis(min: Double, max: Double, inverted: Bool)
+    @objc open func computeAxis(min: Double, max: Double, inverted: Bool, data: ChartData? = nil)
     {
         var min = min, max = max
 

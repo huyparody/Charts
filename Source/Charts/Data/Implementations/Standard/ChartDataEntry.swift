@@ -16,6 +16,8 @@ open class ChartDataEntry: ChartDataEntryBase, NSCopying
     /// the x value
     @objc open var x = 0.0
     
+    open var date: String = ""
+    
     public required init()
     {
         super.init()
@@ -43,6 +45,14 @@ open class ChartDataEntry: ChartDataEntryBase, NSCopying
     {
         self.init(x: x, y: y)
         self.data = data
+    }
+    
+    /// Entry with date
+    @objc public convenience init(x: Double, y: Double, data: Any? = nil, date: String?)
+    {
+        self.init(x: x, y: y)
+        self.data = data
+        self.date = date ?? ""
     }
     
     /// An Entry represents one single entry in the chart.

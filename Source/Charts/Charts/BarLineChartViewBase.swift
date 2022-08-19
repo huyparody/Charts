@@ -198,7 +198,7 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
         
         if xAxis.isEnabled
         {
-            xAxisRenderer.computeAxis(min: xAxis._axisMinimum, max: xAxis._axisMaximum, inverted: false)
+            xAxisRenderer.computeAxis(min: xAxis._axisMinimum, max: xAxis._axisMaximum, inverted: false, data: data)
         }
         
         xAxisRenderer.renderAxisLine(context: context)
@@ -349,7 +349,8 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
             xAxisRenderer.computeAxis(
                 min: xAxis._axisMinimum,
                 max: xAxis._axisMaximum,
-                inverted: false)
+                inverted: false,
+                data: data)
 
             legendRenderer.computeLegend(data: data)
         }

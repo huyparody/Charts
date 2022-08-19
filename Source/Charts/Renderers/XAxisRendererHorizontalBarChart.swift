@@ -23,7 +23,7 @@ open class XAxisRendererHorizontalBarChart: XAxisRenderer
         self.chart = chart
     }
     
-    open override func computeAxis(min: Double, max: Double, inverted: Bool)
+    open override func computeAxis(min: Double, max: Double, inverted: Bool, data: ChartData? = nil)
     {
         var min = min, max = max
         

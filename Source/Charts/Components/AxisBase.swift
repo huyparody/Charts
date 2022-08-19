@@ -80,6 +80,9 @@ open class AxisBase: ComponentBase
     /// the actual array of entries
     @objc open var entries = [Double]()
     
+    /// mang date hien thi thay the x value
+    @objc open var dates = [String]()
+    
     /// axis label entries only used for centered labels
     @objc open var centeredEntries = [Double]()
     

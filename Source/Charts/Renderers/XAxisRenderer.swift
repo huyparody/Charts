@@ -19,6 +19,8 @@ open class XAxisRenderer: NSObject, AxisRenderer
     @objc public let viewPortHandler: ViewPortHandler
     @objc public let axis: XAxis
     @objc public let transformer: Transformer?
+    
+    var chartData: ChartData? = nil
 
     @objc public init(viewPortHandler: ViewPortHandler, axis: XAxis, transformer: Transformer?)
     {
@@ -29,9 +31,11 @@ open class XAxisRenderer: NSObject, AxisRenderer
         super.init()
     }
     
-    open func computeAxis(min: Double, max: Double, inverted: Bool)
+    /// truyen ca chart vao de lay date
+    open func computeAxis(min: Double, max: Double, inverted: Bool, data: ChartData? = nil)
     {
         var min = min, max = max
+        self.chartData = data
         
         if let transformer = self.transformer,
             viewPortHandler.contentWidth > 10,
@@ -274,6 +278,19 @@ open class XAxisRenderer: NSObject, AxisRenderer
         
         let entries = axis.entries
         
+        // lay ra date lam thanh mang cac ngay`
+        if let chartData = chartData {
+            for i in chartData.dataSets
+            {
+                for j in 0 ..< i.entryCount
+                {
+                    guard let e = i.entryForIndex(j) else { continue }
+                    axis.dates = []
+                    axis.dates.append(e.date)
+                }
+            }
+        }
+        
         for i in entries.indices
         {
             let px = isCenteringEnabled ? CGFloat(axis.centeredEntries[i]) : CGFloat(entries[i])
@@ -281,8 +298,11 @@ open class XAxisRenderer: NSObject, AxisRenderer
                 .applying(valueToPixelMatrix)
 
             guard viewPortHandler.isInBoundsX(position.x) else { continue }
-            
-            let label = axis.valueFormatter?.stringForValue(axis.entries[i], axis: axis) ?? ""
+            // doi hien thi X thanh label
+//            let label = axis.valueFormatter?.stringForValue(axis.entries[i], axis: axis) ?? ""
+            let labelX = "\(axis.entries[i])"
+            let indexLabelX = Int(Double(labelX) ?? 0)
+            let label = axis.dates[indexLabelX] //-1 vi i lech voi dateArray
             let labelns = label as NSString
             
             if axis.isAvoidFirstLastClippingEnabled
@@ -309,7 +329,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
                       formattedLabel: label,
                       x: position.x,
                       y: pos,
-                      attributes: labelAttrs,
+                      attributes: axis.isSelecting.0 == indexLabelX && axis.isSelecting.1 ? labelSelectingAttrs : labelAttrs,
                       constrainedTo: labelMaxSize,
                       anchor: anchor,
                       angleRadians: labelRotationAngleRadians)
@@ -489,4 +509,12 @@ open class XAxisRenderer: NSObject, AxisRenderer
                          attributes: [.font: limitLine.valueFont,
                                       .foregroundColor: limitLine.valueTextColor])
     }
+}
+extension XAxisRenderer {
+    
+    func getDate(date: String) {
+        var arrayDate = [String]()
+        arrayDate.append(date)
+    }
+    
 }
