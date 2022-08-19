@@ -151,7 +151,7 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
     open var indexSelected = -1
     
     /// tuple index dang chon va trang thai
-    open var isSelecting = (-1, false)
+    open var isSelecting = (0, false)
 
     @objc open func setExtraOffsets(left: CGFloat, top: CGFloat, right: CGFloat, bottom: CGFloat)
     {
@@ -451,10 +451,10 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
                 highlighted.removeAll(keepingCapacity: false)
                 if callDelegate
                 {
-                    delegate?.chartValueNothingSelected?(self)
                     //handle select index
                     self.isSelecting = (self.indexSelected, false)
                     self.xAxis.isSelecting = (self.indexSelected, false)
+                    delegate?.chartValueNothingSelected?(self)
                 }
                 setNeedsDisplay()
                 return
@@ -467,11 +467,11 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
         {
             // notify the listener
             delegate?.chartValueNothingSelected?(self)
-            delegate?.chartValueSelected?(self, entry: entry, highlight: h)
             //handle select index
             self.indexSelected = Int(entry.x)
             self.isSelecting = (self.indexSelected, true)
             self.xAxis.isSelecting = (self.indexSelected, true)
+            delegate?.chartValueSelected?(self, entry: entry, highlight: h)
         }
 
         // redraw the chart
