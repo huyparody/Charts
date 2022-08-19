@@ -326,6 +326,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
                 }
             }
             
+            //index selecting ko can - 1 nua vi indexlabel x va index selecting deu bat dau tu 1
             drawLabel(context: context,
                       formattedLabel: label,
                       x: position.x,

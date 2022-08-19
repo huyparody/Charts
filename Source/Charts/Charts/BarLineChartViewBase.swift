@@ -530,18 +530,34 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
     private var _decelerationDisplayLink: NSUIDisplayLink!
     private var _decelerationVelocity = CGPoint()
     
-    @objc private func tapGestureRecognized(_ recognizer: NSUITapGestureRecognizer)
+    /// bien nay de scroll vao 1 bar bat ky khi truyen tu ben ngoai vao
+    public var manualPoint: CGPoint? = nil
+    
+    @objc public func tapGestureRecognized(_ recognizer: NSUITapGestureRecognizer)
     {
         if data === nil
         {
             return
         }
         
-        if recognizer.state == NSUIGestureRecognizerState.ended
-        {
+//        if recognizer.state == NSUIGestureRecognizerState.ended
+//        {
             if !isHighLightPerTapEnabled { return }
             
-            let h = getHighlightByTouchPoint(recognizer.location(in: self))
+            var h: Highlight?
+            if manualPoint == nil {
+                h = getHighlightByTouchPoint(recognizer.location(in: self))
+            }
+            else {
+                //return theo cac gia tri mac dinh cua highlight
+                h = Highlight(
+                    x: manualPoint!.x, y: manualPoint!.y,
+                    xPx: h?.xPx ?? 0, yPx: h?.yPx ?? 0,
+                    dataIndex: h?.dataIndex ?? -1,
+                    dataSetIndex: h?.dataSetIndex ?? 0,
+                    stackIndex: -1,
+                    axis: h?.axis ?? .init(rawValue: 1)!)
+            }
             
             if h === nil || h == self.lastHighlighted
             {
@@ -553,7 +569,9 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
                 lastHighlighted = h
                 highlightValue(h, callDelegate: true)
             }
-        }
+//        }
+        
+        manualPoint = nil
     }
     
     @objc private func doubleTapGestureRecognized(_ recognizer: NSUITapGestureRecognizer)
@@ -1956,4 +1974,15 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
 
         return min(xAxis._axisMaximum, Double(pt.x))
     }
+}
+extension BarLineChartViewBase {
+    
+    ///ham nay de chon 1 bar thu cong thay vi tap
+    public func manuallySelectValueBar(point: CGPoint, after: Double) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + after, execute: {
+            self.manualPoint = point
+            self.tapGestureRecognized(.init())
+        })
+    }
+    
 }
