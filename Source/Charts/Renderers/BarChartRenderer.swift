@@ -514,9 +514,14 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                         
                         if dataSet.isDrawValuesEnabled
                         {
+                            guard let chart = dataProvider as? BarChartView  else {
+                                return
+                            }
+                            // neu la type rating -> van draw text
+                            // neu dang select -> draw text rong, khong thi draw value binh thuong
                             drawValue(
                                 context: context,
-                                value: e.data as? BarChartDisplayType == .rating ? ratingText : formatter.stringForValue(
+                                value: e.data as? BarChartDisplayType == .rating ? ratingText : checkIsSelecting(chart: chart, index: j) ? "" : formatter.stringForValue(
                                     val,
                                     entry: e,
                                     dataSetIndex: dataSetIndex,
@@ -854,4 +859,12 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
 
         return element
     }
+}
+extension BarChartRenderer {
+    
+    func checkIsSelecting(chart: BarChartView, index: Int) -> Bool {
+        //phai tru 1 vi vong for draw bat dau tu 0, con chart data entry thi bat dau tu 1
+        return (chart.isSelecting.0 - 1) == index && chart.isSelecting.1
+    }
+    
 }

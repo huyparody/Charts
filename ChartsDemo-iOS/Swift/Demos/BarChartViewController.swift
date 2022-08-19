@@ -190,14 +190,14 @@ class BarChartViewController: DemoBaseViewController {
     }
     
     override func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        chartValueNothingSelected(chartView)
-        chartView.indexSelected = Int(entry.x)
+//        chartValueNothingSelected(chartView)
+//        chartView.indexSelected = Int(entry.x)
 //        chartView.isSelecting = (chartView.indexSelected, true)
-        chartView.xAxis.isSelecting = (chartView.indexSelected, true)
+//        chartView.xAxis.isSelecting = (chartView.indexSelected, true)
     }
     
     override func chartValueNothingSelected(_ chartView: ChartViewBase) {
 //        chartView.isSelecting = (chartView.indexSelected, false)
-        chartView.xAxis.isSelecting = (chartView.indexSelected, false)
+//        chartView.xAxis.isSelecting = (chartView.indexSelected, false)
     }
 }
