@@ -299,11 +299,12 @@ open class XAxisRenderer: NSObject, AxisRenderer
 
             guard viewPortHandler.isInBoundsX(position.x) else { continue }
             // doi hien thi X thanh label
-//            let label = axis.valueFormatter?.stringForValue(axis.entries[i], axis: axis) ?? ""
+            let label = axis.valueFormatter?.stringForValue(axis.entries[i], axis: axis) ?? ""
             let labelX = "\(axis.entries[i])"
             let indexLabelX = Int(Double(labelX) ?? 0)
-            let label = axis.dates[indexLabelX - 1] //-1 vi i lech voi dateArray
+//            let label = axis.dates[indexLabelX - 1] //-1 vi i lech voi dateArray
             let labelns = label as NSString
+            print(indexLabelX, i)
             
             if axis.isAvoidFirstLastClippingEnabled
             {
