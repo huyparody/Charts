@@ -1981,6 +1981,7 @@ extension BarLineChartViewBase {
     public func manuallySelectValueBar(point: CGPoint, after: Double) {
         DispatchQueue.main.asyncAfter(deadline: .now() + after, execute: {
             self.manualPoint = point
+            self._outerScrollView?.setContentOffset(point, animated: true)
             self.tapGestureRecognized(.init())
         })
     }
