@@ -302,7 +302,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
 //            let label = axis.valueFormatter?.stringForValue(axis.entries[i], axis: axis) ?? ""
             let labelX = "\(axis.entries[i])"
             let indexLabelX = Int(Double(labelX) ?? 0)
-            let label = axis.dates[indexLabelX - 1] //phai -1 vi axies entries[i] bat dau tu 1, con vong for bat dau tu 0
+            let label = axis.dates.count > 0 ? axis.dates[indexLabelX - 1] : axis.valueFormatter?.stringForValue(axis.entries[i], axis: axis) ?? "" //phai -1 vi axies entries[i] bat dau tu 1, con vong for bat dau tu 0
             let labelns = label as NSString
 //            print(indexLabelX, axis.dates[indexLabelX - 1], i)
             
