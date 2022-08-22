@@ -1981,7 +1981,7 @@ extension BarLineChartViewBase {
     public func scrollToValueBar(point: CGPoint, after: Double = 0.5, easingOption: ChartEasingOption = .linear) {
         DispatchQueue.main.asyncAfter(deadline: .now() + after, execute: {
             self.manualPoint = point
-            self.centerViewToAnimated(xValue: point.x, yValue: point.y, axis: .left, duration: 0, easingOption: easingOption)
+            self.centerViewToAnimated(xValue: point.x, yValue: point.y, axis: .left, duration: after, easingOption: easingOption)
             self.tapGestureRecognized(.init())
         })
     }
