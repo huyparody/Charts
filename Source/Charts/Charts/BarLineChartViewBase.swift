@@ -1978,9 +1978,10 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
 extension BarLineChartViewBase {
     
     ///ham nay de chon 1 bar thu cong thay vi tap
-    public func manuallySelectValueBar(point: CGPoint, after: Double) {
+    public func scrollToValueBar(point: CGPoint, after: Double = 0.5, easingOption: ChartEasingOption = .linear) {
         DispatchQueue.main.asyncAfter(deadline: .now() + after, execute: {
             self.manualPoint = point
+            self.centerViewToAnimated(xValue: point.x, yValue: point.y, axis: .left, duration: after, easingOption: easingOption)
             self._outerScrollView?.setContentOffset(point, animated: true)
             self.tapGestureRecognized(.init())
         })

@@ -97,7 +97,7 @@ class BarChartViewController: DemoBaseViewController {
         marker.minimumSize = CGSize(width: 80, height: 40)
         chartView.marker = marker
         
-        chartView.manuallySelectValueBar(point: .init(x: 5, y: 8), after: 0.3)
+        chartView.scrollToValueBar(point: .init(x: 5, y: 8), after: 0.3)
         
         sliderX.value = 12
         sliderY.value = 50
