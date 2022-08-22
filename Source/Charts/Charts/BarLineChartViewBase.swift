@@ -562,7 +562,7 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
             if h === nil || h == self.lastHighlighted
             {
                 lastHighlighted = nil
-                highlightValue(nil, callDelegate: true)
+//                highlightValue(nil, callDelegate: true) //ko cho unhighlight khi cham vao index dang highlight
             }
             else
             {
