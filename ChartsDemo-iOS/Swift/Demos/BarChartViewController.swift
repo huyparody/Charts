@@ -97,7 +97,7 @@ class BarChartViewController: DemoBaseViewController {
         marker.minimumSize = CGSize(width: 80, height: 40)
         chartView.marker = marker
         
-        chartView.scrollToValueBar(point: .init(x: 5, y: 8), after: 0.3)
+//        chartView.scrollToValueBar(point: .init(x: 5, y: 8), after: 0.3)
         
         sliderX.value = 12
         sliderY.value = 50
@@ -118,27 +118,45 @@ class BarChartViewController: DemoBaseViewController {
 //        BarChartDataEntry(x: 0, y: 4, date: "31/05"),
         BarChartDataEntry(x: 1, y: 0, date: "01/06"),
         BarChartDataEntry(x: 2, y: 6.5, date: "02/06"),
-        BarChartDataEntry(x: 3, y: 4, date: "03/06"),
+        BarChartDataEntry(x: 3, y: 1, data: BarChartDisplayType.happening, date: "03/06"),
         BarChartDataEntry(x: 4, y: 1, date: "04/06"),
         BarChartDataEntry(x: 5, y: 8, date: "05/06"),
         BarChartDataEntry(x: 6, y: 1, data: BarChartDisplayType.rating, date: "06/06"),
-        BarChartDataEntry(x: 7, y: 4, date: "07/06"),
+        BarChartDataEntry(x: 7, y: 1, data: BarChartDisplayType.incoming, date: "07/06"),
         BarChartDataEntry(x: 8, y: 3, date: "08/06"),
-        BarChartDataEntry(x: 9, y: 8, date: "09/06"),
+        BarChartDataEntry(x: 9, y: 1, data: BarChartDisplayType.cancelled,date: "09/06"),
         BarChartDataEntry(x: 10, y: 4, date: "10/06"),
     ]
     
     func setData() {
         let set = BarChartDataSet.init(entries: yValue, label: "Diem")
         //set mau khi chon bar
-        set.highlightColor = .red
-        set.colors = [.systemPurple]
+        
+        let colors = yValue.map { entry -> UIColor in
+            if let type = entry.data as? BarChartDisplayType {
+                switch type {
+                case .rating:
+                    return .init(hexString: "#F1DAFF")
+                case .happening:
+                    return .init(hexString: "#AAF1C6")
+                case .incoming:
+                    return .init(hexString: "#A3DAFF")
+                case .cancelled:
+                    return .init(hexString: "#DCDCDC")
+                }
+            }
+            return .init(hexString: "#F1DAFF")
+        }
+        
+        set.highlightColor = .clear.withAlphaComponent(0.6)
+//        set.colors = [.systemPurple, .blue, .red, .green, .yellow, .red, .brown, .yellow, .orange, .clear]
+        set.colors = colors
         set.valueFont = UIFont.systemFont(ofSize: 12, weight: .semibold)
         set.ratingFont = UIFont.systemFont(ofSize: 9, weight: .semibold)
-        set.valueTextColor = .green
+        set.valueTextColor = .init(hexString: "#5B2E89")
         set.ratingText = "alo"
         set.highlightRatingColor = .brown
-        set.ratingBarColor = .systemGreen
+//        set.ratingBarColor = .systemGreen
         let data = BarChartData(dataSet: set)
         //width cua 1 bar
         data.barWidth = 0.72
@@ -202,5 +220,25 @@ class BarChartViewController: DemoBaseViewController {
     override func chartValueNothingSelected(_ chartView: ChartViewBase) {
 //        chartView.isSelecting = (chartView.indexSelected, false)
 //        chartView.xAxis.isSelecting = (chartView.indexSelected, false)
+    }
+}
+
+extension UIColor {
+    convenience init(hexString: String) {
+        let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt64()
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
 }

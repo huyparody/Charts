@@ -19,6 +19,9 @@ import CoreGraphics
 //
 public enum BarChartDisplayType {
     case rating
+    case happening
+    case incoming
+    case cancelled
 }
 
 open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
@@ -386,7 +389,8 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
             }
             
             //mau cua vao danh gia
-            context.setFillColor(entry.data as? BarChartDisplayType == .rating ? dataSet.ratingBarColor.cgColor : dataSet.color(atIndex: 0).cgColor)
+            //comment vi ko can set thu cong nua
+//            context.setFillColor(entry.data as? BarChartDisplayType == .rating ? dataSet.ratingBarColor.cgColor : dataSet.color(atIndex: 0).cgColor)
             
             // fill -> ve hinh chu nhat
 //            context.fill(barRect)
