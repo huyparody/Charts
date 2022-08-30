@@ -477,6 +477,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 let valueFont = dataSet.valueFont
                 let ratingFont = dataSet.ratingFont
                 let ratingText = dataSet.ratingText
+                let ratingTextColor = dataSet.ratingTextColor
                 let valueTextHeight = valueFont.lineHeight
                 posOffset = (drawValueAboveBar ? -(valueTextHeight + valueOffsetPlus) : valueOffsetPlus)
                 negOffset = (drawValueAboveBar ? valueOffsetPlus : -(valueTextHeight + valueOffsetPlus))
@@ -522,7 +523,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                             guard let chart = dataProvider as? BarChartView  else {
                                 return
                             }
-                            // neu la type rating -> van draw text
+                            // neu la type rating -> van draw text rating
                             // neu dang select hoac type khac base -> draw text rong, khong thi draw value binh thuong
                             drawValue(
                                 context: context,
@@ -537,7 +538,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                                 : (rect.midY - valueFont.pointSize - 4), //midY - heightFont -> 0 o tren dung design, 4= constraint theo design
                                 font: e.data as? BarChartDisplayType == .rating ? ratingFont : valueFont,
                                 align: .center,
-                                color: dataSet.valueTextColorAt(j),
+                                color: e.data as? BarChartDisplayType == .rating && checkIsSelecting(chart: chart, index: j) ? ratingTextColor : dataSet.valueTextColorAt(j), //neu data la kieu rating va dang chon thi mau chu thay doi, cac thang khac van giu nguyen
                                 anchor: CGPoint(x: 0.5, y: 0.5),
                                 angleRadians: angleRadians)
                         }

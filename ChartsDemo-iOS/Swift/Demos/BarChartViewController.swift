@@ -160,6 +160,7 @@ class BarChartViewController: DemoBaseViewController {
         set.ratingFont = UIFont.systemFont(ofSize: 9, weight: .semibold)
         set.valueTextColor = .init(hexString: "#5B2E89")
         set.ratingText = "alo"
+        set.ratingTextColor = .red
         let data = BarChartData(dataSet: set)
         //width cua 1 bar
         data.barWidth = 0.72
