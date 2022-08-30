@@ -396,7 +396,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
             // fill -> ve hinh chu nhat
 //            context.fill(barRect)
             // draw corner radius topleft va topright cua 1 bar
-            let path = UIBezierPath.init(roundedRect: barRect, byRoundingCorners: entry.data as? BarChartDisplayType == .rating ? .allCorners : [.topLeft, .topRight], cornerRadii: .init(width: 8, height: 8))
+            let path = UIBezierPath.init(roundedRect: barRect, byRoundingCorners: entry.data as? BarChartDisplayType != .base ? .allCorners : [.topLeft, .topRight], cornerRadii: .init(width: 8, height: 0))
             context.addPath(path.cgPath)
             context.setStrokeColor(UIColor.clear.cgColor)
             context.drawPath(using: .fillStroke)
@@ -789,7 +789,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
 //                context.fill(barRect)
                 // -> set highlight corner theo default bar
-                let path = UIBezierPath.init(roundedRect: barRect, byRoundingCorners: e.data as? BarChartDisplayType == .rating ? .allCorners : [.topLeft, .topRight], cornerRadii: .init(width: 8, height: 8))
+                let path = UIBezierPath.init(roundedRect: barRect, byRoundingCorners: e.data as? BarChartDisplayType != .base ? .allCorners : [.topLeft, .topRight], cornerRadii: .init(width: 8, height: 0))
                 context.addPath(path.cgPath)
                 context.setStrokeColor(UIColor.clear.cgColor)
                 context.drawPath(using: .fillStroke)
