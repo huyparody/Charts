@@ -519,7 +519,7 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
 
             let pos = getMarkerPosition(highlight: highlight)
             //neu la cot danh gia ngay > k show marker
-            if e.data as? BarChartDisplayType == .rating {
+            if e.data as? BarChartDisplayType != .base {
                 return
             }
             // check bounds
