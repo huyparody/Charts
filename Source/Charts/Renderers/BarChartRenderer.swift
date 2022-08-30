@@ -18,6 +18,7 @@ import CoreGraphics
 
 //
 public enum BarChartDisplayType {
+    case base
     case rating
     case happening
     case incoming
@@ -522,10 +523,10 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                                 return
                             }
                             // neu la type rating -> van draw text
-                            // neu dang select -> draw text rong, khong thi draw value binh thuong
+                            // neu dang select hoac type khac base -> draw text rong, khong thi draw value binh thuong
                             drawValue(
                                 context: context,
-                                value: e.data as? BarChartDisplayType == .rating ? ratingText : checkIsSelecting(chart: chart, index: j) ? "" : formatter.stringForValue(
+                                value: e.data as? BarChartDisplayType == .rating ? ratingText : checkIsSelecting(chart: chart, index: j) || e.data as? BarChartDisplayType != .base ? "" : formatter.stringForValue(
                                     val,
                                     entry: e,
                                     dataSetIndex: dataSetIndex,
@@ -737,7 +738,23 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 let trans = dataProvider.getTransformer(forAxis: set.axisDependency)
                 //mau cua danh gia khi chon
-                context.setFillColor(e.data as? BarChartDisplayType == .rating ? set.highlightRatingColor.cgColor : set.highlightColor.cgColor)
+                
+                switch e.data as? BarChartDisplayType {
+                case .happening:
+                    context.setFillColor(set.highlightHappening.cgColor)
+                case .incoming:
+                    context.setFillColor(set.highlightIncoming.cgColor)
+                case .base:
+                    context.setFillColor(set.highlightColor.cgColor)
+                case .rating:
+                    context.setFillColor(set.highlightColor.cgColor)
+                case .cancelled:
+                    context.setFillColor(set.highlightCancelled.cgColor)
+
+                case .none:
+                    break
+                }
+//                context.setFillColor(e.data as? BarChartDisplayType == .happening ? set.highlightHappening.cgColor : set.highlightColor.cgColor)
                 context.setAlpha(set.highlightAlpha)
                 
                 let isStack = high.stackIndex >= 0 && e.isStacked

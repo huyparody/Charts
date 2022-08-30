@@ -116,16 +116,16 @@ class BarChartViewController: DemoBaseViewController {
     
     let yValue: [BarChartDataEntry] = [
 //        BarChartDataEntry(x: 0, y: 4, date: "31/05"),
-        BarChartDataEntry(x: 1, y: 0, date: "01/06"),
-        BarChartDataEntry(x: 2, y: 6.5, date: "02/06"),
+        BarChartDataEntry(x: 1, y: 0, data: BarChartDisplayType.base, date: "01/06"),
+        BarChartDataEntry(x: 2, y: 6.5, data: BarChartDisplayType.base, date: "02/06"),
         BarChartDataEntry(x: 3, y: 1, data: BarChartDisplayType.happening, date: "03/06"),
-        BarChartDataEntry(x: 4, y: 1, date: "04/06"),
-        BarChartDataEntry(x: 5, y: 8, date: "05/06"),
+        BarChartDataEntry(x: 4, y: 1, data: BarChartDisplayType.base, date: "04/06"),
+        BarChartDataEntry(x: 5, y: 8, data: BarChartDisplayType.base, date: "05/06"),
         BarChartDataEntry(x: 6, y: 1, data: BarChartDisplayType.rating, date: "06/06"),
         BarChartDataEntry(x: 7, y: 1, data: BarChartDisplayType.incoming, date: "07/06"),
-        BarChartDataEntry(x: 8, y: 3, date: "08/06"),
+        BarChartDataEntry(x: 8, y: 3, data: BarChartDisplayType.base, date: "08/06"),
         BarChartDataEntry(x: 9, y: 1, data: BarChartDisplayType.cancelled,date: "09/06"),
-        BarChartDataEntry(x: 10, y: 4, date: "10/06"),
+        BarChartDataEntry(x: 10, y: 4, data: BarChartDisplayType.base, date: "10/06"),
     ]
     
     func setData() {
@@ -135,6 +135,8 @@ class BarChartViewController: DemoBaseViewController {
         let colors = yValue.map { entry -> UIColor in
             if let type = entry.data as? BarChartDisplayType {
                 switch type {
+                case .base:
+                    return .init(hexString: "#F1DAFF")
                 case .rating:
                     return .init(hexString: "#F1DAFF")
                 case .happening:
@@ -145,18 +147,19 @@ class BarChartViewController: DemoBaseViewController {
                     return .init(hexString: "#DCDCDC")
                 }
             }
-            return .init(hexString: "#F1DAFF")
+            return .clear
         }
         
-        set.highlightColor = .clear.withAlphaComponent(0.6)
+        set.highlightColor = .systemPink
+        set.highlightIncoming = .blue
+        set.highlightCancelled = .gray
+        set.highlightHappening = .green
 //        set.colors = [.systemPurple, .blue, .red, .green, .yellow, .red, .brown, .yellow, .orange, .clear]
         set.colors = colors
         set.valueFont = UIFont.systemFont(ofSize: 12, weight: .semibold)
         set.ratingFont = UIFont.systemFont(ofSize: 9, weight: .semibold)
         set.valueTextColor = .init(hexString: "#5B2E89")
         set.ratingText = "alo"
-        set.highlightRatingColor = .brown
-//        set.ratingBarColor = .systemGreen
         let data = BarChartData(dataSet: set)
         //width cua 1 bar
         data.barWidth = 0.72

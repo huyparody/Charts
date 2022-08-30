@@ -215,9 +215,6 @@ public protocol ChartDataSetProtocol
     /// string cho thang danh gia
     var ratingText: String { get set }
     
-    /// color cho rating bar
-    var ratingBarColor: NSUIColor { get set }
-    
     /// The rotation angle (in degrees) for value-text labels
     var valueLabelAngle: CGFloat { get set }
     

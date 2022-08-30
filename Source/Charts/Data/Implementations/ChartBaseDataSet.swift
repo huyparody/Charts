@@ -309,8 +309,6 @@ open class ChartBaseDataSet: NSObject, ChartDataSetProtocol, NSCopying
     
     public var ratingText: String = ""
     
-    public var ratingBarColor: NSUIColor = .orange
-    
     /// The rotation angle (in degrees) for value-text labels
     open var valueLabelAngle: CGFloat = CGFloat(0.0)
     
